@@ -15,23 +15,22 @@ import practica.system.Entity;
  */
 public abstract class Instalacion extends Entity {
 
-    public TipoIsla tipo;
-    int id;
-    public int coste;
-    public Medio medio;
-    public Alimentacion alimentacion;
-    public int comida;
-    public int hectarias;
-    public TipoRecinto tipoRecinto;
+    protected TipoIsla tipo;
+    protected int id;
+    protected int coste;
+    protected Medio medio;
+    protected Alimentacion alimentacion;
+    protected int comida;
+    protected int hectarias;
+    protected TipoRecinto tipoRecinto;
     //indica como de probable es que haya caos un dinosaurio(0-100)
-    public int caos;
-    public int capacidad;
-    public ArrayList<Dinosaurio> dinosaurios = new ArrayList<>();
+    protected int caos;
+    protected int capacidad;
+    protected ArrayList<Dinosaurio> dinosaurios = new ArrayList<>();
 
     public Instalacion(TipoIsla tipo, int coste, Medio medio, Alimentacion alimentacion, int comida, int hectareas, TipoRecinto tipoRecinto, int capacidad) {
         super();
         id = getID();
-        caos = 0;
         this.alimentacion = alimentacion;
         this.capacidad = capacidad;
         this.comida = capacidad;
@@ -42,37 +41,46 @@ public abstract class Instalacion extends Entity {
         this.tipoRecinto = tipoRecinto;
     }
 
-    public int instalacionID() {
+    //getters
+    public int getinstalacionID() {
         return this.id;
     }
 
-    public void caosCalculator() {
-        for (Dinosaurio dinos : dinosaurios) {
-            //si los dinosaurios estan hambrientos aumenta
-            if (dinos.salud < 25) {
-                this.caos = this.caos + (int) Math.floor(Math.random() * 10) + 5;
-            }
-            //si el medio es distinto aumenta mucho mas
-            if (dinos.medio != this.medio) {
-                this.caos = this.caos + (int) Math.floor(Math.random() * 10) + 10;
-            }
-            if (dinos.alimentacion != this.alimentacion) {
-                this.caos = this.caos + (int) Math.floor(Math.random() * 10) + 5;
-            }
-        }
+    public Alimentacion getAlimentacion() {
+        return this.alimentacion;
+    }
 
-        switch (this.tipoRecinto) {
-            case VIDREO:
-                this.caos = this.caos + 3;
-                break;
-            case MADERA:
-                this.caos = this.caos + 5;
-                break;
-            case ELECTRIFICADO:
-                this.caos = this.caos + 1;
-                break;
-        }
-        this.caos = this.caos + ((int) Math.floor(Math.random() * 10));
+    public int getCapacidad() {
+        return this.capacidad;
+    }
+
+    public int getCoste() {
+        return this.coste;
+    }
+
+    public Medio getMedio() {
+        return this.medio;
+    }
+
+    public int getComida() {
+        return this.comida;
+    }
+
+    public TipoIsla getTipo() {
+        return this.tipo;
+    }
+
+    public TipoRecinto getRecinto() {
+        return this.tipoRecinto;
+    }
+
+    //setters
+    public void setComida(int comida) {
+        this.comida = comida;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
     public String infoRecintos() {

@@ -5,7 +5,7 @@
 package practica.instalaciones.instalacionesDeCria;
 
 import practica.dinosaurios.Dinosaurio;
-import practica.dinosaurios.tiposDeDinosaurios.TyrannosaurusRex;
+import practica.dinosaurios.TyrannosaurusRex;
 import practica.enums.Alimentacion;
 import practica.enums.Medio;
 import practica.enums.TipoRecinto;

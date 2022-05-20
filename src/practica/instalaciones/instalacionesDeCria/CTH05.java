@@ -1,7 +1,7 @@
 package practica.instalaciones.instalacionesDeCria;
 
 import practica.dinosaurios.Dinosaurio;
-import practica.dinosaurios.tiposDeDinosaurios.Branchiosaurus;
+import practica.dinosaurios.Branchiosaurus;
 import practica.enums.*;
 
 /**

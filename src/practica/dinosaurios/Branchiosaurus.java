@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package practica.dinosaurios.tiposDeDinosaurios;
+package practica.dinosaurios;
 
 import practica.dinosaurios.Dinosaurio;
 import practica.enums.Alimentacion;
@@ -12,16 +12,16 @@ import practica.enums.Medio;
  *
  * @author rodri
  */
-public class Mosasaurus extends Dinosaurio {
+public class Branchiosaurus extends Dinosaurio {
 
-    public Mosasaurus(String nombre) {
+    public Branchiosaurus(String nombre) {
 
-        super(nombre, Medio.ACUATICO, Alimentacion.CARNIVORO, 42);
+        super(nombre, Medio.TERRESTRE, Alimentacion.HERVIBORO, 12);
 
     }
 
     @Override
     public String toString() {
-        return "Soy " + this.mote + " el Mososaurio";
+        return "Soy " + this.mote + " el Branchiosaurus";
     }
 }

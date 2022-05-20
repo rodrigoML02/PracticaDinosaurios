@@ -13,15 +13,15 @@ import practica.system.Entity;
  */
 public abstract class Dinosaurio extends Entity {
 
-    public Medio medio;
-    public Alimentacion alimentacion;
-    public int edad;
-    public int edadProblematica;
-    public int salud;
-    public int favs;
-    public String mote;
-    public int hambre;
-    public int iD;
+    protected Medio medio;
+    protected Alimentacion alimentacion;
+    protected int edad;
+    protected int edadProblematica;
+    protected int salud;
+    protected int favs;
+    protected String mote;
+    protected int hambre;
+    protected int iD;
 
     public Dinosaurio(String nombre, Medio medio, Alimentacion alimentacion, int edadProblematica) {
         super();
@@ -39,6 +39,15 @@ public abstract class Dinosaurio extends Entity {
     @Override
     public abstract String toString();
 
+    //GETTERS
+    public String getMote() {
+        return this.mote;
+    }
+
+    public Medio getMedio() {
+        return this.medio;
+    }
+
     public int getDinoID() {
         return this.iD;
     }
@@ -55,6 +64,11 @@ public abstract class Dinosaurio extends Entity {
         return this.salud;
     }
 
+    public int getFavs() {
+        return this.favs;
+    }
+
+    //setters
     public void Alimentar(int comida) {
         this.hambre = this.hambre + comida;
 
@@ -62,6 +76,14 @@ public abstract class Dinosaurio extends Entity {
 
     public void crecer() {
         this.edad++;
+    }
+
+    public void cambiarNombre(String newMote) {
+        this.mote = newMote;
+    }
+
+    public void setFavs(int favs) {
+        this.favs = favs;
     }
 
     public boolean comprobadorVejez() {
