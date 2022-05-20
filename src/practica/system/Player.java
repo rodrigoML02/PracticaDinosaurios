@@ -7,6 +7,8 @@ import practica.islands.islandTypes.islasDeCrianza.Sorna;
 import practica.islands.islandTypes.islasDeExposicion.IslaMatanceros;
 import practica.islands.islandTypes.islasDeExposicion.IslaNublar;
 import practica.islands.islandTypes.islasDeExposicion.IslaSanDiego;
+import practica.system.exceptions.NoHayEspacioException;
+import practica.system.exceptions.PobrezaException;
 
 /**
  *
@@ -54,9 +56,37 @@ public class Player extends Entity {
         this.coins = coins;
     }
 
+    public Isla getIsla(int i) {
+        return this.Islas.get(i);
+    }
+
     @Override
     public String toString() {
         return "Player{" + "alias=" + alias + ", coins=" + coins + ", Islas=" + Islas + '}';
     }
 
+    public void rellenarComidaIslas(int numIsla) throws Exception {
+        int comidaMax = this.Islas.get(numIsla).getHectareas() * 3 - this.Islas.get(numIsla).getComida();
+        if (this.coins < comidaMax) {
+            throw new PobrezaException();
+        }
+        this.coins = this.coins - comidaMax * 5;
+        this.Islas.get(numIsla).setComida(comidaMax);
+    }
+
+    public void rellenarComidaIslas(int numIsla, int comida) throws Exception {
+        int comidaMax = this.Islas.get(numIsla).getHectareas() * 3 - (this.Islas.get(numIsla).getComida() + comida);
+        if (comidaMax < 0) {
+            throw new NoHayEspacioException();
+        }
+        if (this.coins < comidaMax) {
+            throw new PobrezaException();
+        }
+        this.coins = this.coins - comidaMax * 5;
+        this.Islas.get(numIsla).setComida(comidaMax);
+    }
+
+    public void rellenarInstalaciones(int index) {
+        this.Islas.get(index).rellenarInstalaciones();
+    }
 }

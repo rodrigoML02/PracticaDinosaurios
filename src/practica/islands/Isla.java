@@ -44,7 +44,8 @@ public abstract class Isla extends Entity {
 
     //setters
     public void setComida(int comida) {
-        this.comida = comida;
+
+        this.comida = this.comida + comida;
     }
 
     public void setHectareas(int hectareas) {
@@ -53,6 +54,16 @@ public abstract class Isla extends Entity {
 
     public void destruirInstalaciones(Instalacion instalacion) {
         this.instalaciones.remove(instalacion);
+    }
+
+    public void rellenarInstalaciones() {
+        for (Instalacion instalacion : this.instalaciones) {
+            int max = instalacion.getCoste() - instalacion.getComida();
+            if (max >= 0 & this.comida > 0) {
+                instalacion.setComida(max);
+                this.comida = this.comida - max;
+            }
+        }
     }
 
     @Override

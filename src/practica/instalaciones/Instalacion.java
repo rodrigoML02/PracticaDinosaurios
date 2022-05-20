@@ -85,7 +85,7 @@ public abstract class Instalacion extends Entity {
 
     //setters
     public void setComida(int comida) {
-        this.comida = comida;
+        this.comida = this.comida + comida;
     }
 
     public void setCapacidad(int capacidad) {
