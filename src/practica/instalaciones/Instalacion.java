@@ -42,9 +42,9 @@ public abstract class Instalacion extends Entity {
     }
 
     //getters
-    public Dinosaurio getDinosaurios()
-        ishfdiqdhfiwh{
-        return this.dinosaurios;
+    public Dinosaurio getDinosaurios(int num) {
+
+        return this.dinosaurios.get(num);
     }
 
     public int getinstalacionID() {
@@ -57,6 +57,10 @@ public abstract class Instalacion extends Entity {
 
     public int getCapacidad() {
         return this.capacidad;
+    }
+
+    public int getHectareas() {
+        return this.hectarias;
     }
 
     public int getCoste() {

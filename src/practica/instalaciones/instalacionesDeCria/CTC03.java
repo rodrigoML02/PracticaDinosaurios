@@ -6,6 +6,7 @@ package practica.instalaciones.instalacionesDeCria;
 
 import practica.dinosaurios.Dinosaurio;
 import practica.dinosaurios.TyrannosaurusRex;
+import practica.dinosaurios.Velocirraptor;
 import practica.enums.Alimentacion;
 import practica.enums.Medio;
 import practica.enums.TipoRecinto;
@@ -29,8 +30,14 @@ public class CTC03 extends InstalacionesDeCria {
 
     @Override
     public Dinosaurio CrearDinosaurio(String mote) {
+        Dinosaurio dinosaurio;
+        int dados = (int) Math.floor(Math.random() * 10);
+        if (dados >= 0 & dados <= 5) {
+            dinosaurio = new TyrannosaurusRex("mote");
+        } else {
+            dinosaurio = new Velocirraptor("mote");
+        }
 
-        TyrannosaurusRex dinosaurio = new TyrannosaurusRex("mote");
         return dinosaurio;
     }
 

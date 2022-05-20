@@ -20,14 +20,14 @@ public abstract class Cria extends Isla {
 
     public InstalacionesDeCria getInstalacion(int num) {
         InstalacionesDeCria instalacionDeCria = null;
-        if (this.instalaciones.get(num).tipo == this.tipo) {
+        if (this.instalaciones.get(num).getTipo() == this.tipo) {
             instalacionDeCria = (InstalacionesDeCria) this.instalaciones.get(num);
         }
         return instalacionDeCria;
     }
 
     public void construirInstalaciones(InstalacionesDeCria instalacionNueva) {
-        if (this.hectareas >= instalacionNueva.hectarias) {
+        if (this.hectareas >= instalacionNueva.getHectareas()) {
             this.instalaciones.add(instalacionNueva);
         } else {
             System.out.println("No hay Espacio en la isla");

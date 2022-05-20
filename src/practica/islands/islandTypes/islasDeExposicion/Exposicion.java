@@ -23,16 +23,30 @@ public abstract class Exposicion extends Isla {
         this.nivelAdquisitivo = nivelAdquisitivo;
     }
 
+    //getters
+    public int getVisitantes() {
+        return this.visitantes;
+    }
+
+    public NivelAdquisitivo getNivelAdquisitivo() {
+        return this.nivelAdquisitivo;
+    }
+
+    //setter
+    public void setVisitas(int visitas) {
+        this.visitantes = visitas;
+    }
+
     public InstalacionesDeExposicion getInstalacion(int num) {
         InstalacionesDeExposicion instalacionDeExposicion = null;
-        if (this.instalaciones.get(num).tipo == this.tipo) {
+        if (this.instalaciones.get(num).getTipo() == this.tipo) {
             instalacionDeExposicion = (InstalacionesDeExposicion) this.instalaciones.get(num);
         }
         return instalacionDeExposicion;
     }
 
     public void construirInstalaciones(InstalacionesDeExposicion instalacionNueva) {
-        if (this.hectareas >= instalacionNueva.hectarias) {
+        if (this.hectareas >= instalacionNueva.getHectareas()) {
             this.instalaciones.add(instalacionNueva);
         } else {
             System.out.println("No hay Espacio en la isla");
