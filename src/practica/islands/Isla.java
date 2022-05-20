@@ -19,6 +19,7 @@ public abstract class Isla extends Entity {
 
     public Isla(int hectareas, int comida, TipoIsla tipo) {
         super();
+        this.id = getID();
         this.comida = comida;
         this.hectareas = hectareas;
         this.tipo = tipo;

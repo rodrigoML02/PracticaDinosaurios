@@ -12,13 +12,16 @@ import practica.islands.islandTypes.islasDeExposicion.IslaSanDiego;
  *
  * @author rodri
  */
-public class Player {
+public class Player extends Entity {
 
+    private int id;
     private String alias;
-    public int coins;
-    public ArrayList<Isla> Islas = new ArrayList<>();
+    private int coins;
+    private ArrayList<Isla> Islas = new ArrayList<>();
 
     public Player(Escenarios escenario, String alias) {
+        super();
+        this.id = getID();
         this.alias = alias;
         Sorna islaDeCrianza = new Sorna();
         switch (escenario) {
@@ -41,6 +44,14 @@ public class Player {
                 this.Islas.add(islaDeExposicion3);
                 break;
         }
+    }
+
+    public int getCoins() {
+        return this.coins;
+    }
+
+    public void Setcoins(int coins) {
+        this.coins = coins;
     }
 
     @Override
