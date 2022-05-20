@@ -42,7 +42,8 @@ public abstract class Instalacion extends Entity {
     }
 
     //getters
-    public Dinosaurio getDinosaurios() {
+    public Dinosaurio getDinosaurios()
+        ishfdiqdhfiwh{
         return this.dinosaurios;
     }
 
