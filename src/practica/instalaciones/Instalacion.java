@@ -42,6 +42,10 @@ public abstract class Instalacion extends Entity {
     }
 
     //getters
+    public Dinosaurio getDinosaurios() {
+        return this.dinosaurios;
+    }
+
     public int getinstalacionID() {
         return this.id;
     }
