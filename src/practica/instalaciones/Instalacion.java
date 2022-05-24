@@ -64,6 +64,11 @@ public abstract class Instalacion extends Entity {
         return this.hectarias;
     }
 
+    public int getCapacidadActual() {
+
+        return this.dinosaurios.size();
+    }
+
     public int getCoste() {
         return this.coste;
     }
