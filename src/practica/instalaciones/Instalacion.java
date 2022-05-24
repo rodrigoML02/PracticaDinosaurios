@@ -5,6 +5,7 @@
 package practica.instalaciones;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import practica.dinosaurios.Dinosaurio;
 import practica.enums.*;
 import practica.system.Entity;
@@ -75,6 +76,19 @@ public abstract class Instalacion extends Entity {
         return this.comida;
     }
 
+    public int getSaludMedia() {
+        int saludT = 0;
+        int saludM;
+        int contador = 0;
+        for (Dinosaurio dinosaurio : this.dinosaurios) {
+            saludT = saludT + dinosaurio.getHambre();
+            contador++;
+
+        }
+        saludM = saludT / contador;
+        return saludM;
+    }
+
     public TipoIsla getTipo() {
         return this.tipo;
     }
@@ -99,6 +113,7 @@ public abstract class Instalacion extends Entity {
     }
 
     public void alimentarDinosaurios() {
+        reOrdenarLista();
         for (Dinosaurio dinosaurio : this.dinosaurios) {
             if (this.comida > 0) {
                 if (dinosaurio.getHambre() > 0) {
@@ -109,6 +124,10 @@ public abstract class Instalacion extends Entity {
                 System.out.println("La instalacion no tiene comida");
             }
         }
+    }
+
+    public void reOrdenarLista() {
+        Collections.sort(this.dinosaurios);
     }
 
     @Override

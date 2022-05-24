@@ -11,7 +11,7 @@ import practica.system.Entity;
  *
  *
  */
-public abstract class Dinosaurio extends Entity {
+public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio> {
 
     protected Medio medio;
     protected Alimentacion alimentacion;
@@ -86,6 +86,10 @@ public abstract class Dinosaurio extends Entity {
         this.favs = favs;
     }
 
+    public void setPruebaSalud(int salud) {
+        this.salud = salud;
+    }
+
     public boolean comprobadorVejez() {
         boolean viejo = false;
         if (this.edad == this.edadProblematica) {
@@ -96,6 +100,12 @@ public abstract class Dinosaurio extends Entity {
 
     public String moreInfo() {
         return "iD=" + this.iD + ", medio=" + medio + ", alimentacion=" + alimentacion + ", edad=" + edad + ", edadProblematica=" + edadProblematica + ", salud=" + salud + ", favs=" + favs + ", hambre=" + hambre + '}';
+    }
+
+    @Override
+    public int compareTo(Dinosaurio o) {
+
+        return o.getSalud() - this.salud;
     }
 
 }

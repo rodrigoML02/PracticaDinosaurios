@@ -5,6 +5,7 @@
 package practica.islands.islandTypes.islasDeExposicion;
 
 import practica.enums.*;
+import practica.instalaciones.Instalacion;
 import practica.instalaciones.instalacionesDeExposicion.InstalacionesDeExposicion;
 import practica.islands.Isla;
 
@@ -56,4 +57,39 @@ public abstract class Exposicion extends Isla {
     @Override
     public abstract String toString();
 
+    public void lleegadaDeVisitantes() {
+        //llegada
+        int visitante;
+        int hectareasT = 0;
+        int saludT = 0;
+        int saludM = 0;
+        int contador = 0;
+        for (Instalacion instalacion : this.instalaciones) {
+            hectareasT = hectareasT + instalacion.getHectareas();
+            saludT = saludT + instalacion.getSaludMedia();
+            contador++;
+        }
+        saludM = saludT / contador;
+        visitante = ((this.visitantes * hectareasT) / this.hectareas) * saludM / 100;
+        this.visitantes = this.visitantes + visitante;
+    }
+
+    public void abandonoDeVisitantes() throws Exception {
+        int visitas;
+        int hectareasT = 0;
+        int saludT = 0;
+        int saludM = 0;
+        int contador = 0;
+        for (Instalacion instalacion : this.instalaciones) {
+            hectareasT = hectareasT + instalacion.getHectareas();
+            saludT = saludT + instalacion.getSaludMedia();
+            contador++;
+        }
+        saludM = saludT / contador;
+        visitas = this.visitantes - ((this.visitantes * hectareasT) / this.hectareas) * saludM / 100;
+        if (this.visitantes - visitas < 0) {
+            throw new Exception();
+        }
+        this.visitantes = this.visitantes - visitas;
+    }
 }
