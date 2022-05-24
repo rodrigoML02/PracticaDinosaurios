@@ -6,6 +6,7 @@ package practica.dinosaurios;
 
 import practica.enums.*;
 import practica.system.Entity;
+import practica.system.exceptions.MuertoException;
 
 /**
  *
@@ -108,13 +109,25 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
         this.favs = favs;
     }
 
-    public void enfermar() {
+    public void enfermar() throws Exception {
         if (this.nivelDeHambre < 0.25 * this.hambre) {
-            this.salud = this.salud - 30;
+            if (this.salud >= 30) {
+                this.salud = this.salud - 30;
+            } else {
+                throw new MuertoException();
+            }
         } else if (this.nivelDeHambre < 0.75 * this.hambre) {
-            this.salud = this.salud - 30;
+            if (this.salud >= 15) {
+                this.salud = this.salud - 15;
+            } else {
+                throw new MuertoException();
+            }
         } else if (this.nivelDeHambre < this.hambre) {
-            this.salud = this.salud - 5;
+            if (this.salud >= 5) {
+                this.salud = this.salud - 5;
+            } else {
+                throw new MuertoException();
+            }
         }
 
     }

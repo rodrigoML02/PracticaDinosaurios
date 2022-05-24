@@ -16,8 +16,8 @@ import practica.system.exceptions.NoHayEspacioException;
  */
 public abstract class Exposicion extends Isla {
 
-    public int visitantes;
-    public NivelAdquisitivo nivelAdquisitivo;
+    protected int visitantes;
+    protected NivelAdquisitivo nivelAdquisitivo;
 
     public Exposicion(int hectareas, int comida, int visitantes, NivelAdquisitivo nivelAdquisitivo) {
         super(hectareas, comida, TipoIsla.EXHIBICION);
