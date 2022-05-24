@@ -4,7 +4,6 @@
  */
 package practica.dinosaurios;
 
-import practica.dinosaurios.Dinosaurio;
 import practica.enums.Alimentacion;
 import practica.enums.Medio;
 
@@ -16,7 +15,8 @@ public class TyrannosaurusRex extends Dinosaurio {
 
     public TyrannosaurusRex(String nombre) {
         //(String nombre, Medio medio, Alimentacion alimentacion, int edad, int edadProblematica
-        super(nombre, Medio.TERRESTRE, Alimentacion.CARNIVORO, 24);
+        super(nombre, Medio.TERRESTRE, Alimentacion.CARNIVORO, 24, 5);
+        cantidadAIngerir();
     }
 
     @Override

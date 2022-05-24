@@ -15,15 +15,14 @@ public class Practica {
         ArrayList<Dinosaurio> desordenada = new ArrayList();
 
         Dinosaurio dino1 = new Velocirraptor("Juanjo");
-        dino1.setPruebaSalud(10);
+
         Dinosaurio dino2 = new Velocirraptor("paco");
-        dino2.setPruebaSalud(20);
+
         Dinosaurio dino3 = new Velocirraptor("pepe");
-        dino3.setPruebaSalud(30);
+
         Dinosaurio dino4 = new Velocirraptor("juan");
-        dino4.setPruebaSalud(40);
+
         Dinosaurio dino5 = new Velocirraptor("lola");
-        dino5.setPruebaSalud(50);
 
         desordenada.add(dino1);
         desordenada.add(dino2);

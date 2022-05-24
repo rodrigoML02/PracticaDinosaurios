@@ -9,6 +9,8 @@ import java.util.Collections;
 import practica.dinosaurios.Dinosaurio;
 import practica.enums.*;
 import practica.system.Entity;
+import practica.system.exceptions.MuyJovenException;
+import practica.system.exceptions.NoHayEspacioException;
 
 /**
  *
@@ -88,7 +90,6 @@ public abstract class Instalacion extends Entity {
         for (Dinosaurio dinosaurio : this.dinosaurios) {
             saludT = saludT + dinosaurio.getHambre();
             contador++;
-
         }
         saludM = saludT / contador;
         return saludM;
@@ -107,8 +108,27 @@ public abstract class Instalacion extends Entity {
         this.comida = this.comida + comida;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void añadirDinosaurio(Dinosaurio dinosaurio) throws Exception {
+        if (this.capacidad > 0) {
+            if (dinosaurio.comprobadorVejez()) {
+                this.dinosaurios.add(dinosaurio);
+                this.capacidad = this.capacidad - 1;
+            } else {
+                throw new MuyJovenException();
+            }
+        } else {
+            throw new NoHayEspacioException();
+        }
+
+    }
+
+    public void eliminarDinosaurio(Dinosaurio dinosaurio) {
+        this.dinosaurios.remove(dinosaurio);
+        this.capacidad = this.capacidad + 1;
+    }
+
+    public void setCapacidad() {
+        this.capacidad = this.capacidad - 1;
     }
 
     public String infoRecintos() {
@@ -121,9 +141,11 @@ public abstract class Instalacion extends Entity {
         reOrdenarLista();
         for (Dinosaurio dinosaurio : this.dinosaurios) {
             if (this.comida > 0) {
-                if (dinosaurio.getHambre() > 0) {
-                    dinosaurio.Alimentar(100 - dinosaurio.getHambre());
-                    this.comida = this.comida - (100 - dinosaurio.getHambre());
+                if (dinosaurio.getNivelHambre() < dinosaurio.getHambre()) {
+                    int comidas = dinosaurio.getHambre() - dinosaurio.getNivelHambre();
+                    dinosaurio.Alimentar(comidas);
+                    this.comida = this.comida - comidas;
+                    dinosaurio.recuperarSalud();
                 }
             } else {
                 System.out.println("La instalacion no tiene comida");
@@ -133,6 +155,14 @@ public abstract class Instalacion extends Entity {
 
     public void reOrdenarLista() {
         Collections.sort(this.dinosaurios);
+    }
+
+    public boolean dinosaurioEn(Dinosaurio dinosaurio) {
+        boolean estado = false;
+        if (this.dinosaurios.contains(dinosaurio)) {
+            estado = true;
+        }
+        return estado;
     }
 
     @Override

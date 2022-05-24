@@ -1,14 +1,19 @@
 package practica.system;
 
 import java.util.ArrayList;
+import practica.dinosaurios.Dinosaurio;
 import practica.enums.*;
+import practica.instalaciones.Instalacion;
+import practica.instalaciones.instalacionesDeCria.InstalacionesDeCria;
+import practica.instalaciones.instalacionesDeExposicion.InstalacionesDeExposicion;
 import practica.islands.Isla;
+import practica.islands.islandTypes.islasDeCrianza.Cria;
 import practica.islands.islandTypes.islasDeCrianza.Sorna;
+import practica.islands.islandTypes.islasDeExposicion.Exposicion;
 import practica.islands.islandTypes.islasDeExposicion.IslaMatanceros;
 import practica.islands.islandTypes.islasDeExposicion.IslaNublar;
 import practica.islands.islandTypes.islasDeExposicion.IslaSanDiego;
-import practica.system.exceptions.NoHayEspacioException;
-import practica.system.exceptions.PobrezaException;
+import practica.system.exceptions.*;
 
 /**
  *
@@ -52,10 +57,6 @@ public class Player extends Entity {
         return this.coins;
     }
 
-    public void Setcoins(int coins) {
-        this.coins = coins;
-    }
-
     public Isla getIsla(int i) {
         return this.Islas.get(i);
     }
@@ -88,5 +89,79 @@ public class Player extends Entity {
 
     public void rellenarInstalaciones(int index) {
         this.Islas.get(index).rellenarInstalaciones();
+    }
+
+    public void moverDinosaurios(Dinosaurio dinosaurio, Instalacion instalacionObj, Instalacion instalacionDest) throws Exception {
+        int lambda = 0;
+        switch (instalacionObj.getMedio()) {
+            case TERRESTRE:
+                lambda = 5;
+                break;
+            case ACUATICO:
+                lambda = 15;
+                break;
+            case VOLADOR:
+                lambda = 30;
+                break;
+        }
+
+        if (this.coins >= 100 * (3 * (dinosaurio.getEdad() - dinosaurio.getEdaProblematica())) * lambda) {
+            if (instalacionObj.dinosaurioEn(dinosaurio)) {
+                instalacionDest.añadirDinosaurio(dinosaurio);
+                instalacionObj.eliminarDinosaurio(dinosaurio);
+                this.coins = this.coins - (100 * (3 * (dinosaurio.getEdad() - dinosaurio.getEdaProblematica())) * lambda);
+            } else {
+                throw new NotFoundException();
+            }
+        } else {
+            throw new PobrezaException();
+        }
+    }
+
+    public void matarDinosaurios(Dinosaurio dinosaurio, Instalacion instalacionObj) throws Exception {
+        if (this.coins >= 2000) {
+            if (instalacionObj.dinosaurioEn(dinosaurio)) {
+                instalacionObj.eliminarDinosaurio(dinosaurio);
+            } else {
+                throw new NotFoundException();
+            }
+        } else {
+            throw new PobrezaException();
+        }
+    }
+
+    public void construirInstalacion(int index, Instalacion instalacionNueva) throws Exception {
+        boolean running = true;
+        if (this.coins >= instalacionNueva.getCoste()) {
+            while (running) {
+                switch (index) {
+                    case 0:
+
+                        if (instalacionNueva instanceof InstalacionesDeCria) {
+                            Cria isla = (Cria) this.Islas.get(index);
+                            isla.construirInstalaciones((InstalacionesDeCria) instalacionNueva);
+                            this.coins = this.coins - instalacionNueva.getCoste();
+                        } else {
+                            throw new TiposIncompatiblesException();
+                        }
+                        running = false;
+                        break;
+                    case 1:
+                        if (instalacionNueva instanceof InstalacionesDeCria) {
+                            Exposicion isla = (Exposicion) this.Islas.get(index);
+                            isla.construirInstalaciones((InstalacionesDeExposicion) instalacionNueva);
+                            this.coins = this.coins - instalacionNueva.getCoste();
+                        } else {
+                            throw new TiposIncompatiblesException();
+                        }
+                        running = false;
+                        break;
+
+                }
+            }
+        } else {
+            throw new PobrezaException();
+        }
+
     }
 }

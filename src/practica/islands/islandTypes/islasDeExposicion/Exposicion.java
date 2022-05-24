@@ -8,6 +8,7 @@ import practica.enums.*;
 import practica.instalaciones.Instalacion;
 import practica.instalaciones.instalacionesDeExposicion.InstalacionesDeExposicion;
 import practica.islands.Isla;
+import practica.system.exceptions.NoHayEspacioException;
 
 /**
  *
@@ -46,18 +47,19 @@ public abstract class Exposicion extends Isla {
         return instalacionDeExposicion;
     }
 
-    public void construirInstalaciones(InstalacionesDeExposicion instalacionNueva) {
+    public void construirInstalaciones(InstalacionesDeExposicion instalacionNueva) throws Exception {
         if (this.hectareas >= instalacionNueva.getHectareas()) {
             this.instalaciones.add(instalacionNueva);
+            this.hectareas = this.hectareas - instalacionNueva.getHectareas();
         } else {
-            System.out.println("No hay Espacio en la isla");
+            throw new NoHayEspacioException();
         }
     }
 
     @Override
     public abstract String toString();
 
-    public void lleegadaDeVisitantes() {
+    public void llegadaDeVisitantes() {
         //llegada
         int visitante;
         int hectareasT = 0;

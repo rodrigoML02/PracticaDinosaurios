@@ -7,6 +7,7 @@ package practica.islands.islandTypes.islasDeCrianza;
 import practica.enums.TipoIsla;
 import practica.instalaciones.instalacionesDeCria.InstalacionesDeCria;
 import practica.islands.Isla;
+import practica.system.exceptions.NoHayEspacioException;
 
 /**
  *
@@ -26,11 +27,12 @@ public abstract class Cria extends Isla {
         return instalacionDeCria;
     }
 
-    public void construirInstalaciones(InstalacionesDeCria instalacionNueva) {
+    public void construirInstalaciones(InstalacionesDeCria instalacionNueva) throws Exception {
         if (this.hectareas >= instalacionNueva.getHectareas()) {
             this.instalaciones.add(instalacionNueva);
+            this.hectareas = this.hectareas - instalacionNueva.getHectareas();
         } else {
-            System.out.println("No hay Espacio en la isla");
+            throw new NoHayEspacioException();
         }
     }
 

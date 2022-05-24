@@ -22,8 +22,10 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
     protected String mote;
     protected int hambre;
     protected int iD;
+    protected int apetito;
+    protected int nivelDeHambre;
 
-    public Dinosaurio(String nombre, Medio medio, Alimentacion alimentacion, int edadProblematica) {
+    public Dinosaurio(String nombre, Medio medio, Alimentacion alimentacion, int edadProblematica, int apetito) {
         super();
         this.mote = nombre;
         this.iD = this.getID();
@@ -33,7 +35,7 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
         this.edadProblematica = edadProblematica;
         this.salud = 100;
         this.favs = 0;
-        this.hambre = 100;
+        this.apetito = apetito;
     }
 
     @Override
@@ -56,8 +58,16 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
         return this.hambre;
     }
 
+    public int getNivelHambre() {
+        return this.nivelDeHambre;
+    }
+
     public int getEdad() {
         return this.edad;
+    }
+
+    public int getEdaProblematica() {
+        return this.getEdaProblematica();
     }
 
     public int getSalud() {
@@ -70,8 +80,20 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
 
     //setters
     public void Alimentar(int comida) {
-        this.hambre = this.hambre + comida;
+        this.nivelDeHambre = nivelDeHambre + comida;
 
+    }
+
+    public void cantidadAIngerir() {
+        if (comprobadorVejez()) {
+            if (this.edad >= 2 * this.edadProblematica) {
+                this.hambre = this.apetito * 2 ^ (this.edad - this.edadProblematica);
+            } else {
+                this.hambre = this.apetito * 2 ^ (2 * this.edadProblematica);
+            }
+        } else {
+            this.hambre = this.apetito * this.edad;
+        }
     }
 
     public void crecer() {
@@ -86,13 +108,24 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
         this.favs = favs;
     }
 
-    public void setPruebaSalud(int salud) {
-        this.salud = salud;
+    public void enfermar() {
+        if (this.nivelDeHambre < 0.25 * this.hambre) {
+            this.salud = this.salud - 30;
+        } else if (this.nivelDeHambre < 0.75 * this.hambre) {
+            this.salud = this.salud - 30;
+        } else if (this.nivelDeHambre < this.hambre) {
+            this.salud = this.salud - 5;
+        }
+
+    }
+
+    public void recuperarSalud() {
+        this.salud = this.salud + 5;
     }
 
     public boolean comprobadorVejez() {
         boolean viejo = false;
-        if (this.edad == this.edadProblematica) {
+        if (this.edad >= this.edadProblematica) {
             viejo = true;
         }
         return viejo;

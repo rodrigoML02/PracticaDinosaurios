@@ -28,6 +28,7 @@ public abstract class InstalacionesDeCria extends Instalacion {
             if (dados <= 20) {
                 dinosaurio = CrearDinosaurio(mote);
                 this.dinosaurios.add(dinosaurio);
+                setCapacidad();
             }
         }
         return dinosaurio;
