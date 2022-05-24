@@ -98,7 +98,7 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
     }
 
     public void crecer() {
-        this.edad++;
+        this.edad = this.edad + 1;
     }
 
     public void cambiarNombre(String newMote) {
