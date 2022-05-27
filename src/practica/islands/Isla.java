@@ -5,6 +5,7 @@
 package practica.islands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import practica.enums.TipoIsla;
 import practica.instalaciones.Instalacion;
 import practica.system.Entity;
@@ -17,10 +18,10 @@ public abstract class Isla extends Entity {
     protected int id;
     protected ArrayList<Instalacion> instalaciones = new ArrayList<Instalacion>();
 
-    public Isla(int hectareas, int comida, TipoIsla tipo) {
+    public Isla(int hectareas, int comidaCapacidad, TipoIsla tipo) {
         super();
         this.id = getID();
-        this.comida = comida;
+        this.comida = comidaCapacidad;
         this.hectareas = hectareas;
         this.tipo = tipo;
     }
@@ -49,20 +50,32 @@ public abstract class Isla extends Entity {
     }
 
     public void setHectareas(int hectareas) {
-        this.hectareas = hectareas;
+        this.hectareas = this.hectareas - hectareas;
     }
 
     public void destruirInstalaciones(Instalacion instalacion) {
         this.instalaciones.remove(instalacion);
+        setHectareas(-instalacion.getHectareas());
     }
 
     public void rellenarInstalaciones() {
+        reOrdenarLista();
         for (Instalacion instalacion : this.instalaciones) {
             int max = instalacion.getCoste() - instalacion.getComida();
             if (max >= 0 & this.comida > 0) {
                 instalacion.setComida(max);
                 this.comida = this.comida - max;
             }
+        }
+    }
+
+    public void reOrdenarLista() {
+        Collections.sort(this.instalaciones);
+    }
+
+    public void comprobaciónDinosaurios() {
+        for (Instalacion instalacion : this.instalaciones) {
+            instalacion.comprobaciónDinosaurios();
         }
     }
 

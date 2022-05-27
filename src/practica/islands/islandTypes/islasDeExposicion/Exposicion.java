@@ -76,7 +76,7 @@ public abstract class Exposicion extends Isla {
         this.visitantes = this.visitantes + visitante;
     }
 
-    public void abandonoDeVisitantes() throws Exception {
+    public void abandonoDeVisitantes() {
         int visitas;
         int hectareasT = 0;
         int saludT = 0;
@@ -90,9 +90,10 @@ public abstract class Exposicion extends Isla {
         saludM = saludT / contador;
         visitas = this.visitantes - ((this.visitantes * hectareasT) / this.hectareas) * saludM / 100;
         if (this.visitantes - visitas < 0) {
-            throw new Exception();
+            this.visitantes = 0;
+        } else {
+            this.visitantes = this.visitantes - visitas;
         }
-        this.visitantes = this.visitantes - visitas;
     }
 
     public int gananciasIsla() {
@@ -109,10 +110,13 @@ public abstract class Exposicion extends Isla {
                 lambda = 15;
                 break;
         }
-        for (Instalacion instalacion : this.instalaciones) {
-            for (int i = 0; i <= instalacion.getCapacidadActual() - 1; i++) {
-                int pasta = 10 * instalacion.getDinosaurios(i).getEdad() * (instalacion.getDinosaurios(i).getSalud() / 100) * lambda;
-                donacion = donacion + pasta;
+        for (int j = 0; j <= this.visitantes; j++) {
+            for (Instalacion instalacion : this.instalaciones) {
+                for (int i = 0; i <= instalacion.getCapacidad() - 1; i++) {
+                    int pasta = 10 * instalacion.getDinosaurios(i).getEdad() * (instalacion.getDinosaurios(i).getSalud() / 100) * lambda;
+                    instalacion.getDinosaurios(i).setFavs(pasta);
+                    donacion = donacion + pasta;
+                }
             }
         }
         return donacion;

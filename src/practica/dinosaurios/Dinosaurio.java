@@ -6,7 +6,6 @@ package practica.dinosaurios;
 
 import practica.enums.*;
 import practica.system.Entity;
-import practica.system.exceptions.MuertoException;
 
 /**
  *
@@ -37,6 +36,8 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
         this.salud = 100;
         this.favs = 0;
         this.apetito = apetito;
+        this.nivelDeHambre = this.hambre;
+
     }
 
     @Override
@@ -68,7 +69,8 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
     }
 
     public int getEdaProblematica() {
-        return this.getEdaProblematica();
+        return this.edadProblematica;
+
     }
 
     public int getSalud() {
@@ -82,6 +84,11 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
     //setters
     public void Alimentar(int comida) {
         this.nivelDeHambre = nivelDeHambre + comida;
+
+    }
+
+    public void pasarHambre() {
+        this.nivelDeHambre = this.nivelDeHambre - this.apetito;
 
     }
 
@@ -109,24 +116,24 @@ public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio
         this.favs = favs;
     }
 
-    public void enfermar() throws Exception {
+    public void enfermar() {
         if (this.nivelDeHambre < 0.25 * this.hambre) {
             if (this.salud >= 30) {
                 this.salud = this.salud - 30;
             } else {
-                throw new MuertoException();
+                this.salud = 0;
             }
         } else if (this.nivelDeHambre < 0.75 * this.hambre) {
             if (this.salud >= 15) {
                 this.salud = this.salud - 15;
             } else {
-                throw new MuertoException();
+                this.salud = 0;
             }
         } else if (this.nivelDeHambre < this.hambre) {
             if (this.salud >= 5) {
                 this.salud = this.salud - 5;
             } else {
-                throw new MuertoException();
+                this.salud = 0;
             }
         }
 

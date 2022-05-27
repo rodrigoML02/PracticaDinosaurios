@@ -30,7 +30,7 @@ public abstract class Cria extends Isla {
     public void construirInstalaciones(InstalacionesDeCria instalacionNueva) throws Exception {
         if (this.hectareas >= instalacionNueva.getHectareas()) {
             this.instalaciones.add(instalacionNueva);
-            this.hectareas = this.hectareas - instalacionNueva.getHectareas();
+            setHectareas(instalacionNueva.getHectareas());
         } else {
             throw new NoHayEspacioException();
         }

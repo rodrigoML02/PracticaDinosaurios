@@ -24,7 +24,7 @@ public class Player extends Entity {
     private int id;
     private String alias;
     private int coins;
-    private ArrayList<Isla> Islas = new ArrayList<>();
+    private ArrayList<Isla> islas = new ArrayList<>();
 
     public Player(Escenarios escenario, String alias) {
         super();
@@ -35,20 +35,20 @@ public class Player extends Entity {
             case JURASSIC_PARK:
                 this.coins = 100000;
                 IslaNublar islaDeExposicion = new IslaNublar();
-                this.Islas.add(islaDeCrianza);
-                this.Islas.add(islaDeExposicion);
+                this.islas.add(islaDeCrianza);
+                this.islas.add(islaDeExposicion);
                 break;
             case SAN_DIEGO:
                 this.coins = 50000;
                 IslaSanDiego islaDeExposicion2 = new IslaSanDiego();
-                this.Islas.add(islaDeCrianza);
-                this.Islas.add(islaDeExposicion2);
+                this.islas.add(islaDeCrianza);
+                this.islas.add(islaDeExposicion2);
                 break;
             case JURASSIC_EVOLUTION:
                 this.coins = 150000;
                 IslaMatanceros islaDeExposicion3 = new IslaMatanceros();
-                this.Islas.add(islaDeCrianza);
-                this.Islas.add(islaDeExposicion3);
+                this.islas.add(islaDeCrianza);
+                this.islas.add(islaDeExposicion3);
                 break;
         }
     }
@@ -58,37 +58,44 @@ public class Player extends Entity {
     }
 
     public Isla getIsla(int i) {
-        return this.Islas.get(i);
+        return this.islas.get(i);
     }
 
     @Override
     public String toString() {
-        return "Player{" + "alias=" + alias + ", coins=" + coins + ", Islas=" + Islas + '}';
+        return "Player{" + "alias=" + alias + ", coins=" + coins + ", Islas=" + islas + '}';
     }
 
     public void rellenarComidaIslas(int numIsla) throws Exception {
-        int comidaMax = this.Islas.get(numIsla).getHectareas() * 3 - this.Islas.get(numIsla).getComida();
-        if (this.coins < comidaMax) {
+        int comidaMax = this.islas.get(numIsla).getHectareas() * 3 - this.islas.get(numIsla).getComida();
+        if (this.coins < 5 * comidaMax) {
             throw new PobrezaException();
+        } else {
+            this.coins = this.coins - comidaMax * 5;
+            this.islas.get(numIsla).setComida(comidaMax);
+            rellenarInstalaciones(numIsla);
         }
-        this.coins = this.coins - comidaMax * 5;
-        this.Islas.get(numIsla).setComida(comidaMax);
+
     }
 
     public void rellenarComidaIslas(int numIsla, int comida) throws Exception {
-        int comidaMax = this.Islas.get(numIsla).getHectareas() * 3 - (this.Islas.get(numIsla).getComida() + comida);
+        int comidaMax = this.islas.get(numIsla).getHectareas() * 3 - (this.islas.get(numIsla).getComida() + comida);
         if (comidaMax < 0) {
             throw new NoHayEspacioException();
+        } else {
+            if (this.coins < 5 * comidaMax) {
+                throw new PobrezaException();
+            } else {
+                this.coins = this.coins - comidaMax * 5;
+                this.islas.get(numIsla).setComida(comidaMax);
+                rellenarInstalaciones(id);
+            }
+
         }
-        if (this.coins < comidaMax) {
-            throw new PobrezaException();
-        }
-        this.coins = this.coins - comidaMax * 5;
-        this.Islas.get(numIsla).setComida(comidaMax);
     }
 
     public void rellenarInstalaciones(int index) {
-        this.Islas.get(index).rellenarInstalaciones();
+        this.islas.get(index).rellenarInstalaciones();
     }
 
     public void moverDinosaurios(Dinosaurio dinosaurio, Instalacion instalacionObj, Instalacion instalacionDest) throws Exception {
@@ -131,37 +138,54 @@ public class Player extends Entity {
     }
 
     public void construirInstalacion(int index, Instalacion instalacionNueva) throws Exception {
-        boolean running = true;
         if (this.coins >= instalacionNueva.getCoste()) {
-            while (running) {
-                switch (index) {
-                    case 0:
+            switch (index) {
+                case 0:
+                    if (instalacionNueva instanceof InstalacionesDeCria) {
+                        Cria isla = (Cria) this.islas.get(index);
+                        isla.construirInstalaciones((InstalacionesDeCria) instalacionNueva);
+                        this.coins = this.coins - instalacionNueva.getCoste();
+                    } else {
+                        throw new TiposIncompatiblesException();
+                    }
 
-                        if (instalacionNueva instanceof InstalacionesDeCria) {
-                            Cria isla = (Cria) this.Islas.get(index);
-                            isla.construirInstalaciones((InstalacionesDeCria) instalacionNueva);
-                            this.coins = this.coins - instalacionNueva.getCoste();
-                        } else {
-                            throw new TiposIncompatiblesException();
-                        }
-                        running = false;
-                        break;
-                    case 1:
-                        if (instalacionNueva instanceof InstalacionesDeCria) {
-                            Exposicion isla = (Exposicion) this.Islas.get(index);
-                            isla.construirInstalaciones((InstalacionesDeExposicion) instalacionNueva);
-                            this.coins = this.coins - instalacionNueva.getCoste();
-                        } else {
-                            throw new TiposIncompatiblesException();
-                        }
-                        running = false;
-                        break;
+                    break;
+                case 1:
+                    if (instalacionNueva instanceof InstalacionesDeCria) {
+                        Exposicion isla = (Exposicion) this.islas.get(index);
+                        isla.construirInstalaciones((InstalacionesDeExposicion) instalacionNueva);
+                        this.coins = this.coins - instalacionNueva.getCoste();
+                    } else {
+                        throw new TiposIncompatiblesException();
+                    }
+                    break;
 
-                }
             }
+
         } else {
             throw new PobrezaException();
         }
 
+    }
+
+    public void crearDinosaurio(int numInstalacion, String mote) throws Exception {
+        if (this.coins >= 200) {
+            Cria isla = (Cria) getIsla(0);
+            isla.getInstalacion(numInstalacion).CreadordeDinos(mote);
+        } else {
+            throw new PobrezaException();
+        }
+    }
+
+    public void pasarMes() {
+        for (Isla isla : this.islas) {
+            isla.comprobaciónDinosaurios();
+            if (isla instanceof Exposicion) {
+                Exposicion islaE = (Exposicion) isla;
+                islaE.abandonoDeVisitantes();
+                islaE.llegadaDeVisitantes();
+                this.coins = this.coins + islaE.gananciasIsla();
+            }
+        }
     }
 }

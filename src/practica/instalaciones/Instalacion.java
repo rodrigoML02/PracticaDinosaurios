@@ -11,12 +11,13 @@ import practica.enums.*;
 import practica.system.Entity;
 import practica.system.exceptions.MuyJovenException;
 import practica.system.exceptions.NoHayEspacioException;
+import practica.system.exceptions.NoHayExistenciasException;
 
 /**
  *
  * @author rodri
  */
-public abstract class Instalacion extends Entity {
+public abstract class Instalacion extends Entity implements Comparable<Instalacion> {
 
     protected TipoIsla tipo;
     protected int id;
@@ -26,8 +27,6 @@ public abstract class Instalacion extends Entity {
     protected int comida;
     protected int hectarias;
     protected TipoRecinto tipoRecinto;
-    //indica como de probable es que haya caos un dinosaurio(0-100)
-    protected int caos;
     protected int capacidad;
     protected ArrayList<Dinosaurio> dinosaurios = new ArrayList<>();
 
@@ -66,11 +65,6 @@ public abstract class Instalacion extends Entity {
         return this.hectarias;
     }
 
-    public int getCapacidadActual() {
-
-        return this.dinosaurios.size();
-    }
-
     public int getCoste() {
         return this.coste;
     }
@@ -88,7 +82,7 @@ public abstract class Instalacion extends Entity {
         int saludM;
         int contador = 0;
         for (Dinosaurio dinosaurio : this.dinosaurios) {
-            saludT = saludT + dinosaurio.getHambre();
+            saludT = saludT + dinosaurio.getSalud();
             contador++;
         }
         saludM = saludT / contador;
@@ -137,7 +131,7 @@ public abstract class Instalacion extends Entity {
                 + "DINOSAURIOS{" + dinosaurios + "}" + "id= " + this.id;
     }
 
-    public void alimentarDinosaurios() {
+    public void alimentarDinosaurios() throws Exception {
         reOrdenarLista();
         for (Dinosaurio dinosaurio : this.dinosaurios) {
             if (this.comida > 0) {
@@ -148,8 +142,16 @@ public abstract class Instalacion extends Entity {
                     dinosaurio.recuperarSalud();
                 }
             } else {
-                System.out.println("La instalacion no tiene comida");
+                throw new NoHayExistenciasException();
             }
+        }
+    }
+
+    public void comprobaciónDinosaurios() {
+        for (Dinosaurio dinosaurio : this.dinosaurios) {
+            dinosaurio.pasarHambre();
+            dinosaurio.crecer();
+            dinosaurio.enfermar();
         }
     }
 
@@ -163,6 +165,12 @@ public abstract class Instalacion extends Entity {
             estado = true;
         }
         return estado;
+    }
+
+    @Override
+    public int compareTo(Instalacion o) {
+
+        return this.getComida() - o.getComida();
     }
 
     @Override

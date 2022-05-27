@@ -13,22 +13,23 @@ import practica.enums.Escenarios;
 public class Partida extends Entity {
 
     protected Player player;
-    protected static int mes;
+    protected int mes;
     protected int id;
 
     public Partida(Escenarios escenario, String alias) {
         super();
-        id = getID();
-        mes = 0;
-        player = new Player(escenario, alias);
+        this.id = getID();
+        this.mes = 0;
+        this.player = new Player(escenario, alias);
 
     }
 
     public void pasarMes() {
-        Partida.mes = Partida.mes + 1;
+        this.mes = this.mes + 1;
+        this.player.pasarMes();
     }
 
     public int mesActual() {
-        return Partida.mes;
+        return this.mes;
     }
 }
