@@ -4,7 +4,6 @@
  */
 package practica.dinosaurios;
 
-import practica.dinosaurios.Dinosaurio;
 import practica.enums.Alimentacion;
 import practica.enums.Medio;
 
@@ -15,7 +14,8 @@ import practica.enums.Medio;
 public class Pteranodon extends Dinosaurio {
 
     public Pteranodon(String nombre) {
-        super(nombre, Medio.VOLADOR, Alimentacion.CARNIVORO, 16);
+        super(nombre, Medio.VOLADOR, Alimentacion.CARNIVORO, 16, 2);
+        cantidadAIngerir();
     }
 
     @Override

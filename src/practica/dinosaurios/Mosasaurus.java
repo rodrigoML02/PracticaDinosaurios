@@ -4,7 +4,6 @@
  */
 package practica.dinosaurios;
 
-import practica.dinosaurios.Dinosaurio;
 import practica.enums.Alimentacion;
 import practica.enums.Medio;
 
@@ -16,7 +15,8 @@ public class Mosasaurus extends Dinosaurio {
 
     public Mosasaurus(String nombre) {
 
-        super(nombre, Medio.ACUATICO, Alimentacion.CARNIVORO, 42);
+        super(nombre, Medio.ACUATICO, Alimentacion.CARNIVORO, 42, 10);
+        cantidadAIngerir();
 
     }
 

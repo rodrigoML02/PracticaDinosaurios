@@ -11,7 +11,7 @@ import practica.system.Entity;
  *
  *
  */
-public abstract class Dinosaurio extends Entity {
+public abstract class Dinosaurio extends Entity implements Comparable<Dinosaurio> {
 
     protected Medio medio;
     protected Alimentacion alimentacion;
@@ -22,8 +22,10 @@ public abstract class Dinosaurio extends Entity {
     protected String mote;
     protected int hambre;
     protected int iD;
+    protected int apetito;
+    protected int nivelDeHambre;
 
-    public Dinosaurio(String nombre, Medio medio, Alimentacion alimentacion, int edadProblematica) {
+    public Dinosaurio(String nombre, Medio medio, Alimentacion alimentacion, int edadProblematica, int apetito) {
         super();
         this.mote = nombre;
         this.iD = this.getID();
@@ -33,7 +35,9 @@ public abstract class Dinosaurio extends Entity {
         this.edadProblematica = edadProblematica;
         this.salud = 100;
         this.favs = 0;
-        this.hambre = 100;
+        this.apetito = apetito;
+        this.nivelDeHambre = this.hambre;
+
     }
 
     @Override
@@ -56,8 +60,17 @@ public abstract class Dinosaurio extends Entity {
         return this.hambre;
     }
 
+    public int getNivelHambre() {
+        return this.nivelDeHambre;
+    }
+
     public int getEdad() {
         return this.edad;
+    }
+
+    public int getEdaProblematica() {
+        return this.edadProblematica;
+
     }
 
     public int getSalud() {
@@ -70,12 +83,29 @@ public abstract class Dinosaurio extends Entity {
 
     //setters
     public void Alimentar(int comida) {
-        this.hambre = this.hambre + comida;
+        this.nivelDeHambre = nivelDeHambre + comida;
 
     }
 
+    public void pasarHambre() {
+        this.nivelDeHambre = this.nivelDeHambre - this.apetito;
+
+    }
+
+    public void cantidadAIngerir() {
+        if (comprobadorVejez()) {
+            if (this.edad >= 2 * this.edadProblematica) {
+                this.hambre = this.apetito * 2 ^ (this.edad - this.edadProblematica);
+            } else {
+                this.hambre = this.apetito * 2 ^ (2 * this.edadProblematica);
+            }
+        } else {
+            this.hambre = this.apetito * this.edad;
+        }
+    }
+
     public void crecer() {
-        this.edad++;
+        this.edad = this.edad + 1;
     }
 
     public void cambiarNombre(String newMote) {
@@ -86,9 +116,36 @@ public abstract class Dinosaurio extends Entity {
         this.favs = favs;
     }
 
+    public void enfermar() {
+        if (this.nivelDeHambre < 0.25 * this.hambre) {
+            if (this.salud >= 30) {
+                this.salud = this.salud - 30;
+            } else {
+                this.salud = 0;
+            }
+        } else if (this.nivelDeHambre < 0.75 * this.hambre) {
+            if (this.salud >= 15) {
+                this.salud = this.salud - 15;
+            } else {
+                this.salud = 0;
+            }
+        } else if (this.nivelDeHambre < this.hambre) {
+            if (this.salud >= 5) {
+                this.salud = this.salud - 5;
+            } else {
+                this.salud = 0;
+            }
+        }
+
+    }
+
+    public void recuperarSalud() {
+        this.salud = this.salud + 5;
+    }
+
     public boolean comprobadorVejez() {
         boolean viejo = false;
-        if (this.edad == this.edadProblematica) {
+        if (this.edad >= this.edadProblematica) {
             viejo = true;
         }
         return viejo;
@@ -96,6 +153,12 @@ public abstract class Dinosaurio extends Entity {
 
     public String moreInfo() {
         return "iD=" + this.iD + ", medio=" + medio + ", alimentacion=" + alimentacion + ", edad=" + edad + ", edadProblematica=" + edadProblematica + ", salud=" + salud + ", favs=" + favs + ", hambre=" + hambre + '}';
+    }
+
+    @Override
+    public int compareTo(Dinosaurio o) {
+
+        return o.getSalud() - this.salud;
     }
 
 }

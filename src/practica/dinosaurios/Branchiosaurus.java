@@ -4,7 +4,6 @@
  */
 package practica.dinosaurios;
 
-import practica.dinosaurios.Dinosaurio;
 import practica.enums.Alimentacion;
 import practica.enums.Medio;
 
@@ -16,8 +15,8 @@ public class Branchiosaurus extends Dinosaurio {
 
     public Branchiosaurus(String nombre) {
 
-        super(nombre, Medio.TERRESTRE, Alimentacion.HERVIBORO, 12);
-
+        super(nombre, Medio.TERRESTRE, Alimentacion.HERVIBORO, 12, 2);
+        cantidadAIngerir();
     }
 
     @Override

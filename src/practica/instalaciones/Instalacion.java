@@ -5,15 +5,19 @@
 package practica.instalaciones;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import practica.dinosaurios.Dinosaurio;
 import practica.enums.*;
 import practica.system.Entity;
+import practica.system.exceptions.MuyJovenException;
+import practica.system.exceptions.NoHayEspacioException;
+import practica.system.exceptions.NoHayExistenciasException;
 
 /**
  *
  * @author rodri
  */
-public abstract class Instalacion extends Entity {
+public abstract class Instalacion extends Entity implements Comparable<Instalacion> {
 
     protected TipoIsla tipo;
     protected int id;
@@ -23,8 +27,6 @@ public abstract class Instalacion extends Entity {
     protected int comida;
     protected int hectarias;
     protected TipoRecinto tipoRecinto;
-    //indica como de probable es que haya caos un dinosaurio(0-100)
-    protected int caos;
     protected int capacidad;
     protected ArrayList<Dinosaurio> dinosaurios = new ArrayList<>();
 
@@ -42,8 +44,9 @@ public abstract class Instalacion extends Entity {
     }
 
     //getters
-    public Dinosaurio getDinosaurios() {
-        return this.dinosaurios;
+    public Dinosaurio getDinosaurios(int num) {
+
+        return this.dinosaurios.get(num);
     }
 
     public int getinstalacionID() {
@@ -58,6 +61,10 @@ public abstract class Instalacion extends Entity {
         return this.capacidad;
     }
 
+    public int getHectareas() {
+        return this.hectarias;
+    }
+
     public int getCoste() {
         return this.coste;
     }
@@ -70,6 +77,18 @@ public abstract class Instalacion extends Entity {
         return this.comida;
     }
 
+    public int getSaludMedia() {
+        int saludT = 0;
+        int saludM;
+        int contador = 0;
+        for (Dinosaurio dinosaurio : this.dinosaurios) {
+            saludT = saludT + dinosaurio.getSalud();
+            contador++;
+        }
+        saludM = saludT / contador;
+        return saludM;
+    }
+
     public TipoIsla getTipo() {
         return this.tipo;
     }
@@ -80,11 +99,30 @@ public abstract class Instalacion extends Entity {
 
     //setters
     public void setComida(int comida) {
-        this.comida = comida;
+        this.comida = this.comida + comida;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void añadirDinosaurio(Dinosaurio dinosaurio) throws Exception {
+        if (this.capacidad > 0) {
+            if (dinosaurio.comprobadorVejez()) {
+                this.dinosaurios.add(dinosaurio);
+                this.capacidad = this.capacidad - 1;
+            } else {
+                throw new MuyJovenException();
+            }
+        } else {
+            throw new NoHayEspacioException();
+        }
+
+    }
+
+    public void eliminarDinosaurio(Dinosaurio dinosaurio) {
+        this.dinosaurios.remove(dinosaurio);
+        this.capacidad = this.capacidad + 1;
+    }
+
+    public void setCapacidad() {
+        this.capacidad = this.capacidad - 1;
     }
 
     public String infoRecintos() {
@@ -93,17 +131,46 @@ public abstract class Instalacion extends Entity {
                 + "DINOSAURIOS{" + dinosaurios + "}" + "id= " + this.id;
     }
 
-    public void alimentarDinosaurios() {
+    public void alimentarDinosaurios() throws Exception {
+        reOrdenarLista();
         for (Dinosaurio dinosaurio : this.dinosaurios) {
             if (this.comida > 0) {
-                if (dinosaurio.getHambre() > 0) {
-                    dinosaurio.Alimentar(100 - dinosaurio.getHambre());
-                    this.comida = this.comida - (100 - dinosaurio.getHambre());
+                if (dinosaurio.getNivelHambre() < dinosaurio.getHambre()) {
+                    int comidas = dinosaurio.getHambre() - dinosaurio.getNivelHambre();
+                    dinosaurio.Alimentar(comidas);
+                    this.comida = this.comida - comidas;
+                    dinosaurio.recuperarSalud();
                 }
             } else {
-                System.out.println("La instalacion no tiene comida");
+                throw new NoHayExistenciasException();
             }
         }
+    }
+
+    public void comprobaciónDinosaurios() {
+        for (Dinosaurio dinosaurio : this.dinosaurios) {
+            dinosaurio.pasarHambre();
+            dinosaurio.crecer();
+            dinosaurio.enfermar();
+        }
+    }
+
+    public void reOrdenarLista() {
+        Collections.sort(this.dinosaurios);
+    }
+
+    public boolean dinosaurioEn(Dinosaurio dinosaurio) {
+        boolean estado = false;
+        if (this.dinosaurios.contains(dinosaurio)) {
+            estado = true;
+        }
+        return estado;
+    }
+
+    @Override
+    public int compareTo(Instalacion o) {
+
+        return this.getComida() - o.getComida();
     }
 
     @Override

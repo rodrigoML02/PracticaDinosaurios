@@ -8,7 +8,7 @@ package practica.system;
  *
  * @author rodri
  */
-public class Entity {
+public abstract class Entity {
 
     private static int id;
 
@@ -19,4 +19,24 @@ public class Entity {
     public int getID() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Entity other = (Entity) obj;
+        return this.id == other.getID();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
 }

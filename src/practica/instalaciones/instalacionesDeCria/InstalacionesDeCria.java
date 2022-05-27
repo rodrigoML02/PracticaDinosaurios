@@ -10,6 +10,7 @@ import practica.enums.Medio;
 import practica.enums.TipoIsla;
 import practica.enums.TipoRecinto;
 import practica.instalaciones.Instalacion;
+import practica.system.exceptions.NoHayEspacioException;
 
 /**
  *
@@ -21,14 +22,17 @@ public abstract class InstalacionesDeCria extends Instalacion {
         super(TipoIsla.CRIA, coste, medio, alimentacion, comida, hectareas, tipoRecinto, capacidad);
     }
 
-    public Dinosaurio CreadordeDinos(String mote) {
+    public Dinosaurio CreadordeDinos(String mote) throws Exception {
         Dinosaurio dinosaurio = null;
         if (this.capacidad > 0) {
             int dados = (int) Math.floor(Math.random() * 100);
             if (dados <= 20) {
                 dinosaurio = CrearDinosaurio(mote);
                 this.dinosaurios.add(dinosaurio);
+                setCapacidad();
             }
+        } else {
+            throw new NoHayEspacioException();
         }
         return dinosaurio;
     }
