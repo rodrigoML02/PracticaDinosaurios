@@ -35,6 +35,10 @@ public abstract class Isla extends Entity {
         return this.hectareas;
     }
 
+    public int getSizeArrray() {
+        return this.instalaciones.size();
+    }
+
     public int getComida() {
         return this.comida;
     }

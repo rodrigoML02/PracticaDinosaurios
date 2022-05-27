@@ -28,6 +28,33 @@ public class Utilidades {
         return name;
     }
 
+    public static boolean yesOrNo(String palabra) {
+        System.out.println(palabra);
+        BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
+        String name;
+        boolean salida = true;
+        boolean correcto = false;
+        while (!correcto) {
+            try {
+                name = consola.readLine();
+                name = name.toUpperCase();
+                if (name.equals("Y")) {
+                    correcto = true;
+                } else if (name.equals("N")) {
+                    salida = false;
+                    correcto = true;
+                } else {
+                    System.out.println("No válido. Debe introducir un parametro correctp (Y/N).");
+                }
+
+            } catch (IOException exc) {
+                System.out.println("No válido. Debe introducir un parametro correctp (Y/N).");
+            }
+
+        }
+        return salida;
+    }
+
     public static int leeEntero(String pregunta) {
         String CandeNumero = LeerFrase(pregunta);
         int elNumero;

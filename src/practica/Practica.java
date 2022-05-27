@@ -35,6 +35,8 @@ public class Practica {
         Collections.sort(desordenada);
 
         System.out.println(desordenada);
+        String pregunta = "holi";
+        System.out.println(Utilidades.yesOrNo(pregunta));
 
     }
 }

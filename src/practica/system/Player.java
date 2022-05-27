@@ -25,6 +25,7 @@ public class Player extends Entity {
     private String alias;
     private int coins;
     private ArrayList<Isla> islas = new ArrayList<>();
+    protected Dashboard dashboard;
 
     public Player(Escenarios escenario, String alias) {
         super();
@@ -188,4 +189,5 @@ public class Player extends Entity {
             }
         }
     }
+
 }
