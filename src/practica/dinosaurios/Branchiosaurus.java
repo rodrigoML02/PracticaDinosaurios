@@ -17,7 +17,6 @@ public class Branchiosaurus extends Dinosaurio {
 
         super(nombre, Medio.TERRESTRE, Alimentacion.HERVIBORO, 12, 2);
         cantidadAIngerir();
-        System.out.println("ESTO NO TIENE QUE ESTAR AQUI");
     }
 
     @Override
