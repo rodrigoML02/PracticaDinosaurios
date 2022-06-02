@@ -15,7 +15,7 @@ public class Velocirraptor extends Dinosaurio {
 
     public Velocirraptor(String nombre) {
         //(String nombre, Medio medio, Alimentacion alimentacion, int edad, int edadProblematica
-        super(nombre, Medio.TERRESTRE, Alimentacion.CARNIVORO, 38, 8);
+        super(nombre, Medio.TERRESTRE, Alimentacion.CARNIVORO, 8, 8);
         cantidadAIngerir();
 
     }

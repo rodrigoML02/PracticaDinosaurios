@@ -24,11 +24,12 @@ public class Player extends Entity {
     private int id;
     private String alias;
     private int coins;
+    private Escenarios escenario;
     private ArrayList<Isla> islas = new ArrayList<>();
-    protected Dashboard dashboard;
 
     public Player(Escenarios escenario, String alias) {
         super();
+        this.escenario = escenario;
         this.id = getID();
         this.alias = alias;
         Sorna islaDeCrianza = new Sorna();
@@ -60,6 +61,18 @@ public class Player extends Entity {
 
     public Isla getIsla(int i) {
         return this.islas.get(i);
+    }
+
+    public String getNombre() {
+        return this.alias;
+    }
+
+    public Escenarios getEscenario() {
+        return this.escenario;
+    }
+
+    public void pruebaSetCoins() {
+        this.coins = 0;
     }
 
     @Override
@@ -139,7 +152,7 @@ public class Player extends Entity {
     }
 
     public void construirInstalacion(int index, Instalacion instalacionNueva) throws Exception {
-        if (this.coins >= instalacionNueva.getCoste()) {
+        if (instalacionNueva.getCoste() <= this.coins) {
             switch (index) {
                 case 0:
                     if (instalacionNueva instanceof InstalacionesDeCria) {
@@ -152,7 +165,7 @@ public class Player extends Entity {
 
                     break;
                 case 1:
-                    if (instalacionNueva instanceof InstalacionesDeCria) {
+                    if (instalacionNueva instanceof InstalacionesDeExposicion) {
                         Exposicion isla = (Exposicion) this.islas.get(index);
                         isla.construirInstalaciones((InstalacionesDeExposicion) instalacionNueva);
                         this.coins = this.coins - instalacionNueva.getCoste();
@@ -169,13 +182,16 @@ public class Player extends Entity {
 
     }
 
-    public void crearDinosaurio(int numInstalacion, String mote) throws Exception {
+    public Dinosaurio crearDinosaurio(int numInstalacion, String mote) throws Exception {
+
+        Dinosaurio dino = null;
         if (this.coins >= 200) {
             Cria isla = (Cria) getIsla(0);
-            isla.getInstalacion(numInstalacion).CreadordeDinos(mote);
+            dino = isla.getInstalacion(numInstalacion).CreadordeDinos(mote);
         } else {
             throw new PobrezaException();
         }
+        return dino;
     }
 
     public void pasarMes() {

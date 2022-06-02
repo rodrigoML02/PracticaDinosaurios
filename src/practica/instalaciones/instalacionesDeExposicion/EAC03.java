@@ -21,6 +21,6 @@ public class EAC03 extends InstalacionesDeExposicion {
 
     @Override
     public String toString() {
-        return "INSTALACION DE EXHIBICION EAC03";
+        return "INSTALACION DE EXHIBICION EAC03    " + this.coste + "$";
     }
 }

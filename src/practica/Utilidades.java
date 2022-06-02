@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import practica.enums.Escenarios;
+import practica.system.exceptions.*;
 
 /**
  *
@@ -89,15 +90,35 @@ public class Utilidades {
 
         while (!correcto) {
             String escenarioSalida = LeerFrase(pregunta);
+            escenarioSalida = escenarioSalida.replace(' ', '_');
+            escenarioSalida = escenarioSalida.toUpperCase();
+
             try {
                 escenario = Escenarios.valueOf(escenarioSalida);
                 correcto = true;
             } catch (IllegalArgumentException nfe) {
-                System.out.println("No válido. Debe introducir un género correcto (HOMBRE/MUJER).");
+                System.out.println("No válido. Debe introducir un Escenario correcto correcto."
+                        + "\n ");
             }
 
         }
         return escenario;
+    }
+
+    public static void detectorDeExceptions(Exception exc) {
+        if (exc instanceof MuertoException) {
+            System.out.println("dinosaurio con salud 0 peligro");
+        } else if (exc instanceof MuyJovenException) {
+            System.out.println("dinosaurio demasido joven para moverlo");
+        } else if (exc instanceof NoHayEspacioException) {
+            System.out.println("No hay espacio para realizar la operacion");
+        } else if (exc instanceof NotFoundException) {
+            System.out.println("El dinosaurio no se ha encontrado en el lugar esperado");
+        } else if (exc instanceof PobrezaException) {
+            System.out.println("No hay dinero para realizar la operacion");
+        } else if (exc instanceof TiposIncompatiblesException) {
+            System.out.println("Intentelo de nuevo");
+        }
     }
 
 }

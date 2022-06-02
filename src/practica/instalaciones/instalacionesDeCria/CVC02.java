@@ -24,12 +24,12 @@ public class CVC02 extends InstalacionesDeCria {
 
     @Override
     public String toString() {
-        return "INSTALACION DE CRIA CVC02";
+        return "INSTALACION DE CRIA CVC02    " + this.coste + "$";
     }
 
     @Override
     public Dinosaurio CrearDinosaurio(String mote) {
-        Pteranodon dinosaurio = new Pteranodon("mote");
+        Pteranodon dinosaurio = new Pteranodon(mote);
         return dinosaurio;
     }
 

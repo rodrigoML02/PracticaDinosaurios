@@ -23,12 +23,12 @@ public class CAC4 extends InstalacionesDeCria {
 
     @Override
     public String toString() {
-        return "INSTALACION DE CRIA CAC4";
+        return "INSTALACION DE CRIA CAC4    " + this.coste + "$";
     }
 
     @Override
     public Dinosaurio CrearDinosaurio(String mote) {
-        Mosasaurus dinosaurio = new Mosasaurus("mote");
+        Mosasaurus dinosaurio = new Mosasaurus(mote);
         return dinosaurio;
     }
 }

@@ -22,7 +22,7 @@ public class ETH02 extends InstalacionesDeExposicion {
 
     @Override
     public String toString() {
-        return "INSTALACION DE EXHIBICION ETH02";
+        return "INSTALACION DE EXHIBICION ETH02    " + this.coste + "$";
     }
 
 }

@@ -14,7 +14,7 @@ import practica.enums.Medio;
 public class Pteranodon extends Dinosaurio {
 
     public Pteranodon(String nombre) {
-        super(nombre, Medio.VOLADOR, Alimentacion.CARNIVORO, 16, 2);
+        super(nombre, Medio.VOLADOR, Alimentacion.CARNIVORO, 6, 2);
         cantidadAIngerir();
     }
 

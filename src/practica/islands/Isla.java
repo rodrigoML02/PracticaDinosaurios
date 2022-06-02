@@ -45,6 +45,11 @@ public abstract class Isla extends Entity {
 
     public TipoIsla getTipoisla() {
         return this.tipo;
+
+    }
+
+    public Instalacion getInstalacion(int index) {
+        return this.instalaciones.get(index);
     }
 
     //setters
@@ -65,7 +70,7 @@ public abstract class Isla extends Entity {
     public void rellenarInstalaciones() {
         reOrdenarLista();
         for (Instalacion instalacion : this.instalaciones) {
-            int max = instalacion.getCoste() - instalacion.getComida();
+            int max = (instalacion.getCoste() * 100) - instalacion.getComida();
             if (max >= 0 & this.comida > 0) {
                 instalacion.setComida(max);
                 this.comida = this.comida - max;

@@ -22,6 +22,6 @@ public class EVC02 extends InstalacionesDeExposicion {
 
     @Override
     public String toString() {
-        return "INSTALACION DE EXHIBICION EVC02";
+        return "INSTALACION DE EXHIBICION EVC02    " + this.coste + "$";
     }
 }

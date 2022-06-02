@@ -1,7 +1,7 @@
 package practica.instalaciones.instalacionesDeCria;
 
-import practica.dinosaurios.Dinosaurio;
 import practica.dinosaurios.Branchiosaurus;
+import practica.dinosaurios.Dinosaurio;
 import practica.enums.*;
 
 /**
@@ -18,12 +18,12 @@ public class CTH05 extends InstalacionesDeCria {
 
     @Override
     public String toString() {
-        return "INSTALACION DE CRIA CTH05";
+        return "INSTALACION DE CRIA CTH05    " + this.coste + "$";
     }
 
     @Override
     public Dinosaurio CrearDinosaurio(String mote) {
-        Branchiosaurus dinosaurio = new Branchiosaurus("mote");
+        Branchiosaurus dinosaurio = new Branchiosaurus(mote);
         return dinosaurio;
     }
 

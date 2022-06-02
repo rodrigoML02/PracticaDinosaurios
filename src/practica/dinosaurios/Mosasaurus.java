@@ -15,7 +15,7 @@ public class Mosasaurus extends Dinosaurio {
 
     public Mosasaurus(String nombre) {
 
-        super(nombre, Medio.ACUATICO, Alimentacion.CARNIVORO, 42, 10);
+        super(nombre, Medio.ACUATICO, Alimentacion.CARNIVORO, 12, 10);
         cantidadAIngerir();
 
     }

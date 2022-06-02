@@ -4,23 +4,24 @@
  */
 package practica.system;
 
-import practica.enums.Escenarios;
+import java.io.Serializable;
+import practica.islands.islandTypes.islasDeExposicion.Exposicion;
 
 /**
  *
  * @author rodri
  */
-public class Partida extends Entity {
+public class Partida extends Entity implements Serializable {
 
     protected Player player;
     protected int mes;
     protected int id;
 
-    public Partida(Escenarios escenario, String alias) {
+    public Partida(Player player) {
         super();
         this.id = getID();
         this.mes = 0;
-        this.player = new Player(escenario, alias);
+        this.player = player;
 
     }
 
@@ -32,4 +33,11 @@ public class Partida extends Entity {
     public int mesActual() {
         return this.mes;
     }
+
+    @Override
+    public String toString() {
+        Exposicion isla = (Exposicion) player.getIsla(1);
+        return "mes=" + mes + " Escenario: " + player.getEscenario() + "v isitantes: " + isla.getVisitantes();
+    }
+
 }

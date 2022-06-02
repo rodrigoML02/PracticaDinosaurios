@@ -25,7 +25,7 @@ public class CTC03 extends InstalacionesDeCria {
 
     @Override
     public String toString() {
-        return "INSTALACION DE CRIA CTC03";
+        return "INSTALACION DE CRIA CTC03    " + this.coste + "$";
     }
 
     @Override
@@ -33,9 +33,9 @@ public class CTC03 extends InstalacionesDeCria {
         Dinosaurio dinosaurio;
         int dados = (int) Math.floor(Math.random() * 10);
         if (dados >= 0 & dados <= 5) {
-            dinosaurio = new TyrannosaurusRex("mote");
+            dinosaurio = new TyrannosaurusRex(mote);
         } else {
-            dinosaurio = new Velocirraptor("mote");
+            dinosaurio = new Velocirraptor(mote);
         }
 
         return dinosaurio;

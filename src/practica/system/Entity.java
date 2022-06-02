@@ -4,11 +4,13 @@
  */
 package practica.system;
 
+import java.io.Serializable;
+
 /**
  *
  * @author rodri
  */
-public abstract class Entity {
+public abstract class Entity implements Serializable {
 
     private static int id;
 

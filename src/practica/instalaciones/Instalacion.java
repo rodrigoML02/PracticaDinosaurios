@@ -11,7 +11,6 @@ import practica.enums.*;
 import practica.system.Entity;
 import practica.system.exceptions.MuyJovenException;
 import practica.system.exceptions.NoHayEspacioException;
-import practica.system.exceptions.NoHayExistenciasException;
 
 /**
  *
@@ -47,6 +46,10 @@ public abstract class Instalacion extends Entity implements Comparable<Instalaci
     public Dinosaurio getDinosaurios(int num) {
 
         return this.dinosaurios.get(num);
+    }
+
+    public int getArraySize() {
+        return this.dinosaurios.size();
     }
 
     public int getinstalacionID() {
@@ -85,7 +88,11 @@ public abstract class Instalacion extends Entity implements Comparable<Instalaci
             saludT = saludT + dinosaurio.getSalud();
             contador++;
         }
-        saludM = saludT / contador;
+        if (contador == 0) {
+            saludM = 0;
+        } else {
+            saludM = saludT / contador;
+        }
         return saludM;
     }
 
@@ -131,7 +138,7 @@ public abstract class Instalacion extends Entity implements Comparable<Instalaci
                 + "DINOSAURIOS{" + dinosaurios + "}" + "id= " + this.id;
     }
 
-    public void alimentarDinosaurios() throws Exception {
+    public void alimentarDinosaurios() {
         reOrdenarLista();
         for (Dinosaurio dinosaurio : this.dinosaurios) {
             if (this.comida > 0) {
@@ -142,7 +149,7 @@ public abstract class Instalacion extends Entity implements Comparable<Instalaci
                     dinosaurio.recuperarSalud();
                 }
             } else {
-                throw new NoHayExistenciasException();
+                break;
             }
         }
     }
